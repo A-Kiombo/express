@@ -1,0 +1,408 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 414px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+/* Header */
+.app-header {
+    background-color: #f28000;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.logo-express {
+    margin: 0 auto;
+    color: white;
+    font-weight: bold;
+    font-size: 1.6rem;
+    letter-spacing: -1px;
+}
+
+.page-title {
+    text-align: center;
+    color: #f28000;
+    font-size: 1.1rem;
+    margin: 20px 0 15px 0;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Carrossel de Cartões */
+.cards-carousel-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    padding: 5px 0;
+}
+
+.cards-wrapper {
+    display: flex;
+    width: 100%;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    touch-action: pan-y;
+}
+
+.card-item {
+    min-width: 100%;
+    padding: 0 25px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.card-img {
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
+    border-radius: 15px;
+    display: block;
+}
+
+/* Dots e Labels */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ccc;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background-color: #f28000;
+    width: 18px;
+    border-radius: 4px;
+}
+
+.card-label {
+    text-align: center;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* Formulário */
+.form-mobile {
+    padding: 0 25px;
+    margin-top: 15px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.input-wrapper {
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.input-wrapper input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    outline: none;
+    color: #333;
+}
+
+.input-with-suffix {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.suffix {
+    color: #777;
+    font-weight: bold;
+}
+
+.shortcut-link {
+    text-align: right;
+    color: #f28000;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-favorite-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: #777;
+    font-size: 0.9rem;
+    margin: 15px 0 25px 0;
+    cursor: pointer;
+}
+
+.btn-orange {
+    width: 100%;
+    background-color: #f28000;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Feedback Toast */
+.feedback-toast {
+    margin: 15px 25px 0 25px;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+.feedback-toast.hidden { display: none; }
+.feedback-toast.success { background-color: #d4edda; color: #155724; }
+.feedback-toast.error { background-color: #f8d7da; color: #721c24; }
+
+/* --- TELA DE CONFIRMAÇÃO --- */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 100;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 20px 20px;
+}
+
+.confirmation-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+}
+
+.confirm-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.confirm-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.confirm-value.uppercase {
+    text-transform: uppercase;
+}
+
+.confirm-label {
+    font-size: 0.8rem;
+    color: #f28000;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+}
+
+/* Linha de Custo e Total */
+.cost-summary {
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 12px 10px;
+    margin-bottom: 25px;
+}
+
+.cost-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+}
+
+.cost-title {
+    color: #666;
+}
+
+.cost-value {
+    color: #666;
+}
+
+.cost-title.bold, .cost-value.bold {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Botões da Confirmação */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-gray {
+    background-color: #9e9e9e;
+    color: #ffffff;
+}
+
+/* --- ESTILO DO COMPROVATIVO DIGITAL (IMPRESSÃO PDF) --- */
+.pdf-template {
+    width: 600px;
+    padding: 30px 40px;
+    background-color: #ffffff;
+    color: #000000;
+    position: absolute;
+    left: -9999px;
+    top: 0;
+}
+
+.pdf-template.hidden {
+    display: none;
+}
+
+.pdf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.pdf-digital-signature {
+    font-size: 8px;
+    color: #333333;
+    line-height: 1.2;
+}
+
+.pdf-bank-logo img {
+    height: 45px;
+    object-fit: contain;
+}
+
+.pdf-title {
+    text-align: center;
+    color: #d9232a;
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.pdf-divider {
+    border-bottom: 1.5px solid #e0e0e0;
+    margin-bottom: 25px;
+}
+
+.pdf-subtitle {
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 35px;
+    color: #111111;
+}
+
+.pdf-table {
+    width: 85%;
+    margin: 0 auto 40px auto;
+    border-collapse: collapse;
+}
+
+.pdf-table td {
+    padding: 6px 0;
+    font-size: 13px;
+}
+
+.pdf-label {
+    width: 35%;
+    text-align: right;
+    font-weight: bold;
+    padding-right: 15px;
+}
+
+.pdf-value {
+    border-left: 2px solid #d9232a;
+    padding-left: 15px;
+    text-align: left;
+}
+
+.pdf-footer-msg {
+    text-align: center;
+    font-size: 13px;
+    color: #222222;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.pdf-footer-box {
+    background-color: #d8d6c3;
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 9px;
+    color: #333333;
+    line-height: 1.4;
+}
+
+.pdf-line {
+    border-bottom: 1px dashed #888888;
+    margin: 8px 0;
+}
