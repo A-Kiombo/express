@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Eventos Touch / Drag no Carrossel
     cardsWrapper.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
         isDragging = true;
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isDragging = false;
     });
 
-    // 2. Elementos do Formulário e Modal
+    // 2. Elementos do Formulário
     const form = document.getElementById('form-transferencia');
     const inputIban = document.getElementById('iban');
     const inputTitular = document.getElementById('titular');
@@ -54,7 +53,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnConfirmar = document.getElementById('btn-confirmar');
     const feedback = document.getElementById('feedback');
 
-    // Formatação de Valores Monetários
+    // CONDICIONAL DO IBAN PARA PREENCHIMENTO DO NOME
+    const TARGET_IBAN_NUMERIC = "004000002786919110192";
+    const TARGET_NAME = "JOSEFINA ANDRE PEDRO";
+
+    inputIban.addEventListener('input', () => {
+        const rawValue = inputIban.value.replace(/\s+/g, '').toUpperCase();
+        // Verifica se o valor inserido contém a sequência do IBAN alvo
+        if (rawValue.includes(TARGET_IBAN_NUMERIC)) {
+            inputTitular.value = TARGET_NAME;
+            inputTitular.readOnly = true;
+        } else {
+            if (inputTitular.readOnly) {
+                inputTitular.value = '';
+                inputTitular.readOnly = false;
+            }
+        }
+    });
+
+    // Função para formatar o IBAN com ponto a cada 4 caracteres
+    function formatIbanWithDots(ibanStr) {
+        const cleanIban = ibanStr.replace(/[^A-Za-z0-9]/g, '');
+        return cleanIban.match(/.{1,4}/g)?.join('.') || ibanStr;
+    }
+
     function formatMoney(amount) {
         return new Intl.NumberFormat('pt-AO', {
             minimumFractionDigits: 2,
@@ -62,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).format(amount) + ' Kz';
     }
 
-    // Evento do Formulário -> Exibir Modal
+    // Submissão do Formulário
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -75,22 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Preenche dados no modal
         confirmMontante.textContent = formatMoney(valorVal);
-        confirmIban.textContent = ibanVal;
+        confirmIban.textContent = formatIbanWithDots(ibanVal);
         confirmTitular.textContent = titularVal;
         confirmTotal.textContent = formatMoney(valorVal);
 
-        // Exibe o modal
         modalConfirm.classList.remove('hidden');
     });
 
-    // Cancelar Operação
     btnCancelar.addEventListener('click', () => {
         modalConfirm.classList.add('hidden');
     });
 
-    // 3. Confirmar e Gerar PDF Comprovativo
+    // Confirmar e Gerar PDF
     btnConfirmar.addEventListener('click', async () => {
         btnConfirmar.disabled = true;
         btnConfirmar.textContent = 'A processar...';
@@ -99,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const titularVal = inputTitular.value.trim();
         const valorVal = parseFloat(inputValor.value);
 
-        // Data e Hora Atual Formatada
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -112,11 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const signDateStr = `${year}.${month}.${day} ${hours}:${minutes}:${seconds} WAT`;
         const transCode = Math.floor(1000000 + Math.random() * 9000000);
 
-        // Atualizar campos do comprovativo PDF
         document.getElementById('pdf-sign-date').textContent = signDateStr;
         document.getElementById('pdf-datetime').textContent = dateStr;
         document.getElementById('pdf-destinatario').textContent = titularVal.toUpperCase();
-        document.getElementById('pdf-iban').textContent = ibanVal;
+        document.getElementById('pdf-iban').textContent = formatIbanWithDots(ibanVal);
         document.getElementById('pdf-montante').textContent = formatMoney(valorVal);
         document.getElementById('pdf-total').textContent = formatMoney(valorVal);
         document.getElementById('pdf-transacao').textContent = transCode;
@@ -125,17 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
         template.classList.remove('hidden');
 
         try {
-            // Renderiza o HTML em Canvas
             const canvas = await html2canvas(template, {
                 scale: 2,
                 useCORS: true,
                 logging: false
             });
 
-            // Esconde o template novamente
             template.classList.add('hidden');
 
-            // Gera o PDF
             const imgData = canvas.toDataURL('image/png');
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF('p', 'mm', 'a4');
@@ -145,10 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
             pdf.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);
             pdf.save(`Comprovativo_BPC_${transCode}.pdf`);
 
-            // Sucesso e Reset
             modalConfirm.classList.add('hidden');
             form.reset();
             inputIban.value = 'AO06';
+            inputTitular.readOnly = false;
             showFeedback('Transferência realizada com sucesso! O comprovativo foi descarregado.', 'success');
 
         } catch (err) {
