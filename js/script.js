@@ -10,13 +10,13 @@ let endX = 0;
 const bankData = [
     {
         name: "BAI",
-        logo: "logo_bai.png", // Substitui pelo caminho real do logo BAI
+        logo: "bai.jpg", // Substitui pelo caminho real do logo BAI
         slogan: "Fique em casa. Use o BAIDIRECTO<br>BAI. Confiança no Futuro.",
         cardInfo: "IBAN: 004000005416131710184 | 504808******8246"
     },
     {
         name: "BPC",
-        logo: "logo_bpc.png", // Substitui pelo caminho real do logo BPC
+        logo: "BPC.jpg", // Substitui pelo caminho real do logo BPC
         slogan: "O Banco do Povo Angolano<br>BPC. Sempre Consigo.",
         cardInfo: "IBAN: 001000001234567890123 | 504808******1123"
     }
