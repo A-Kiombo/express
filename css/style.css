@@ -377,12 +377,12 @@ body {
     width: 35%;
     text-align: right;
     font-weight: bold;
-    padding-right: 15px;
+    padding-right: 25px; /* Aumentado o espaço entre o texto e a linha */
 }
 
 .pdf-value {
     border-left: 2px solid #003366;
-    padding-left: 15px;
+    padding-left: 25px; /* Aumentado o espaço entre a linha e o texto */
     text-align: left;
 }
 
