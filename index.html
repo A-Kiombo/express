@@ -24,17 +24,32 @@
         <!-- Carrossel de Cartões -->
         <section class="cards-carousel-container">
             <div class="cards-wrapper" id="cards-wrapper">
-                <div class="card-item"><img src="bai.jpg" alt="Cartão BAI" class="card-img"></div>
-                <div class="card-item"><img src="BPC.jpg" alt="Cartão BPC" class="card-img"></div>
+                <!-- Cartão 1: BPC em primeiro lugar -->
+                <div class="card-item" data-bank-name="BPC" data-logo="bpclogo.jpg">
+                    <img src="BPC.jpg" alt="Cartão BPC" class="card-img">
+                </div>
+                <!-- Cartão 2: BAI -->
+                <div class="card-item" data-bank-name="BAI" data-logo="bai.jpg">
+                    <img src="bai.jpg" alt="Cartão BAI" class="card-img">
+                </div>
+                <!-- Opção no deslize para Adicionar Novo Cartão -->
+                <div class="card-item add-card-item" id="add-card-trigger">
+                    <div class="add-card-box">
+                        <span class="plus-icon">+</span>
+                        <p>Adicionar Novo Cartão</p>
+                    </div>
+                </div>
             </div>
+
             <div class="carousel-dots" id="carousel-dots">
                 <span class="dot active"></span>
                 <span class="dot"></span>
+                <span class="dot"></span>
             </div>
-            <p class="card-label" id="card-label">Cartão 1</p>
+            <p class="card-label" id="card-label">Cartão 1 - BPC</p>
         </section>
 
-        <!-- Formulário -->
+        <!-- Formulário de Transferência -->
         <form id="form-transferencia" class="form-mobile">
             <div class="form-group">
                 <label for="iban">IBAN</label>
@@ -77,6 +92,37 @@
             </div>
         </div>
 
+        <!-- Modal de Formulário para Adicionar Novo Cartão -->
+        <div id="modal-add-card" class="modal-overlay hidden">
+            <div class="modal-content form-modal-content">
+                <h2 class="page-title">ADICIONAR NOVO CARTÃO</h2>
+                <form id="form-add-card" class="form-mobile">
+                    <div class="form-group">
+                        <label for="new-bank-name">Nome do Banco</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="new-bank-name" placeholder="Ex: Banco Sol, BFA..." required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-card-img">Imagem do Cartão</label>
+                        <div class="input-wrapper">
+                            <input type="file" id="new-card-img" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-bank-logo">Logotipo do Banco</label>
+                        <div class="input-wrapper">
+                            <input type="file" id="new-bank-logo" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="modal-actions" style="margin-top: 25px;">
+                        <button type="button" id="btn-cancel-card" class="btn-gray">Cancelar</button>
+                        <button type="submit" class="btn-orange">Guardar Cartão</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- TEMPLATE DO COMPROVATIVO OCULTO PARA IMPRESSÃO PDF -->
         <div id="receipt-pdf-template" class="pdf-template hidden">
             <div class="pdf-header">
@@ -85,9 +131,8 @@
                     noreply@bpc.ao<br>
                     Date: <span id="pdf-sign-date">2026.09.04 10:58:36 WAT</span>
                 </div>
-                <!-- Logotipo do BPC no canto superior direito -->
                 <div class="pdf-bank-logo">
-                    <img id="pdf-logo-img" src="bpclogo.jpg" alt="Logo Banco BPC">
+                    <img id="pdf-logo-img" src="bpclogo.jpg" alt="Logo Banco">
                 </div>
             </div>
 
